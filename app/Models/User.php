@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use PhpParser\Node\Expr\FuncCall;
 
 class User extends Authenticatable
 {
@@ -41,4 +42,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function stripe_cards()
+    {
+        return $this->hasMany(StripeCard::class);
+    }
+
+    public function paypal_card()
+    {
+        return $this->hasMany(PaypalPayment::class);
+    }
+
+    public function stripe_connect()
+    {
+        return $this->hasOne(StripeConnect::class);
+    }
 }
